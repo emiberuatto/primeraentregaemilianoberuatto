@@ -9,7 +9,7 @@ if(saludo == "no" ){
      case "si":
         alert("nuestras pizzas son gigantes de 12 porciones, podes elegír variedades diferentes en tu pizzota, también hacemos pizzas de 8 porciones comunes")
      case "si":
-        let ofrecerMenu = prompt('te gusta alguna en particular? tenemos de Muzza, Fugazza, Anchoas, Palmitos, Roquefort, Huevo, morrones, calabresa') 
+        let ofrecerMenu = prompt('te gusta alguna en particular? a continuación coloca el nombre de la variedad que te gusta, tenemos de Muzza, Fugazza, Anchoas, Palmitos, Roquefort, Huevo, morrones, calabresa') 
         switch(ofrecerMenu) {
             case "muzza":
                 alert("la Pizzota de Muzza cuesta $1650")
@@ -48,7 +48,7 @@ if(saludo == "no" ){
  }else{
     alert("Debes responder si o no")}
 
-
+    
 
    
     let saberPrecios = prompt("te gustaría conocer el precio de las pizzas de diferentes variedades?")
@@ -68,4 +68,6 @@ if(saludo == "no" ){
  }
     calcularPrecios(pizza1, pizza2)
     
-}else{}
+}else {}
+
+
