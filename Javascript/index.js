@@ -7,6 +7,8 @@ mostrarPreciosChicas
 mostrarPreciosMedias
 mostrarPreciosGigantes
 buscarVariedad
+agregarVariedad
+borrarVariedad
 
 //objetos para la pizzería, en este caso van a ser las variedades de pizzas con sus precios en sus diferentes versiones
 //para crear los objetos utilizamos el metodo constructor
@@ -102,8 +104,76 @@ function buscarVariedad(array){
    //buscarVariedad(menu) 
 
 
+     //función map:
+     let VariedadesPizza  = menu.map((e) => e.nombre )
+     console.log(VariedadesPizza)
+
+// función for each
+  menu.forEach((e) =>{
+     console.log(`${e.nombre} $ ${e.precioChica}` )
+ })
 
 
+ //ordenamos los precios de menor a mayor
+ const menu2 = [];
+ const nuevoMenu = menu2.concat(menu)
+
+ console.log(nuevoMenu)
+ nuevoMenu.sort((a,b) => a.precioChica - b.precioChica)
+ 
+
+// función para agregar variedades al menú
+
+function agregarVariedad() {
+    nuevoCodigo = prompt(`ingresa el ID`)
+    nuevaVariedad = prompt(`ingresa el nombre de la variedad`)
+    precioChi = prompt (`ingresa el precio de la pizza chica`)
+    precioMed = prompt (`ingresa el precio de la media pizza`)
+    precioGig = prompt (`ingresa el precio de la pizza gigante`)
+    const nuevapizza = new pizza (nuevoCodigo, nuevaVariedad, precioChi, precioMed, precioGig)
+
+    menu.push(nuevapizza)
+}
+
+//función para buscar y borrar la variedad
+function borrarVariedad(array){
+ let nombreaEliminar = prompt(`ingrese la variedad a eliminar`)
+ let arrayNombre = array.map(variedad => variedad.nombre)
+ let indice = arrayNombre.indexOf(nombreaEliminar)
+
+ array.splice(indice, 1)
+ alert(`eliminaste ${nombreaEliminar}`)
+}
+
+
+// Acá comienza a correr el programa para el usuario
+let contraseña = prompt(`Si sos administrador ingresa la contraseña, si no, preciona enter y disfruta de las pizzotas`)
+
+let administrador = true
+
+
+if(contraseña == "pizzotas123"){
+    do{
+    let administrar = prompt(`preciona:
+    1 - para agregar una variedad
+    2 - para borrar una variedad
+    3 - para salir`)
+
+    switch (administrar){
+    case "1":
+        agregarVariedad(menu)
+        mostrarMenu(menu)
+            break  
+    case "2":
+        borrarVariedad(menu)
+        mostrarMenu(menu)
+            break
+        case "salir":
+            administrador = false
+            break
+    }
+}while(administrador)
+}else{
 
 let respuestas = true
 //aplicamnos un ciclo do while, en caso de no responder de manera correcta, les vuelve a preguntar
@@ -231,3 +301,7 @@ if(saludo == "no" ){
         }
         
     }while(respuestas2)   
+
+}
+
+  
