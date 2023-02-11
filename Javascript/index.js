@@ -148,12 +148,15 @@ function agregarVariedad (array) {
     verMenu(menu)
     console.log(nuevapizza)
 
+    localStorage.setItem("menuPizzas", menu)
+    
     nuevoCodigo.value =""
     nuevaVariedad.value =""
     precioChi.value =""
     precioMed.value =""
     precioMed.value =""
     precioGig.value =""
+    
     
 }
 
@@ -168,14 +171,14 @@ for (let pizzas of array){
     let divMenu = document.createElement("div")
     divMenu.className ="col-12 col-md-6 col-lg-4 my-3"
     divMenu.innerHTML = `
-    <div class="catalogo">
-            <img class="card-img-top img-fluid" style=" width: 180px;"  src="imagenes/${pizzas.imagen}" alt="${pizzas.nombre}">
-            <h3 style=" font-size: 1.2rem;">${pizzas.nombre}</h3>
-            <h3 style=" font-size: 1.2rem;">Precio Pizza Chica: ${pizzas.precioChica} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
-            <h3 style=" font-size: 1.2rem;">Precio Media Pizza: ${pizzas.precioMedia} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
-            <h3 style=" font-size: 1.2rem;">Precio Pizza Gigante: ${pizzas.precioGigante} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
+    <div class="catalogo border border-danger">
+            <img class="card-img-top d-block mx-auto img-fluid m-1" style=" width: 180px;"  src="imagenes/${pizzas.imagen}" alt="${pizzas.nombre}">
+            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">${pizzas.nombre}</h3>
+            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Pizza Chica: ${pizzas.precioChica} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
+            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Media Pizza: ${pizzas.precioMedia} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
+            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Pizza Gigante: ${pizzas.precioGigante} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
             
-            <button id="botonComprar ${pizzas.id}" class="btn btn-outline-danger" >Comprar</button>
+            <button id="botonComprar ${pizzas.id}" class="btn btn-outline-danger m-3" >Comprar</button>
         </div>
     `
     catalogoMenu.appendChild(divMenu)  
