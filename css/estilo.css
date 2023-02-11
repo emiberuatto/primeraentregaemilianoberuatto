@@ -1,10 +1,16 @@
-.imagen{
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    
+#formContainer {
+  background-color: bisque;
+  justify-content: center;
+  width: 80vw;
+  margin: auto;
 }
-img{
-    height: 100vh;
-    margin: auto;
+#formContainer #cargarPizzas {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: auto;
+  width: 50%;
+  position: relative;
 }
+
+/*# sourceMappingURL=estilo.css.map */
