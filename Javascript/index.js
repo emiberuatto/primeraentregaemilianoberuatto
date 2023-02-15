@@ -203,12 +203,17 @@ verMenu(menu)
 
 //función para buscar y borrar la variedad
 function borrarVariedad(array){
- let nombreaEliminar = prompt(`ingrese la variedad a eliminar`)
+ let nombreaEliminar = document.getElementById("inputNombreEliminar")
+ nombreaEliminar = nombreaEliminar.value
  let arrayNombre = array.map(variedad => variedad.nombre)
  let indice = arrayNombre.indexOf(nombreaEliminar)
 
  array.splice(indice, 1)
- alert(`eliminaste ${nombreaEliminar}`)
+ //alert(`eliminaste ${nombreaEliminar}`)
+verMenu(menu)
+ localStorage.setItem("menuPizzas", JSON.stringify(array))
+    
+ nombreaEliminar.value = ""
 }
 
 
@@ -237,10 +242,10 @@ function verAdministrador(){
                 <br>
                 <br>
                 <h2>Eliminar variedades de Pizzotas</h2>
-                <label class="Label" for="Nombre">Nombre de la pizza a eliminar</label>
-                <input type="text" name="Nombre" id="inputNombreEliminar">
+                <label class="Label" for="NombreEliminar">Nombre de la pizza a eliminar</label>
+                <input type="text" name="NombreEliminar" id="inputNombreEliminar">
                 <br>
-                <input type="button" class="btn-eliminar" id="btnEmilinar" value="Eliminar" >
+                <input type="button" class="btn-Eliminar" id="btnEmilinar" value="Eliminar" >
                 <br>
                 <br>
                 <button type="button" class="btn btn-danger" id="salirAdministrador">Salir</button>
@@ -254,11 +259,17 @@ function verAdministrador(){
     btnCargar.onclick = ()=>{
         agregarVariedad(menu)
         }
+
+        let btnEmilinar = document.getElementById("btnEmilinar")
+        btnEmilinar.onclick = ()=> {
+            borrarVariedad(menu)
+        }
     let $salirAdministrador = document.getElementById("salirAdministrador")
             $salirAdministrador.onclick = () =>{
             administrador.innerHTML = ""
         }
     
+        
 }   
 
 
