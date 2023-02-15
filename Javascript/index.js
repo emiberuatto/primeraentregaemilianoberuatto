@@ -1,12 +1,12 @@
 // El código es para una pizzería, interactuamos con el cliente en caso que éste este interesado.
 
-//funciones:
+funciones:
 //calcularPrecios
 mostrarMenu
-// mostrarPreciosChicas
-// mostrarPreciosMedias
-// mostrarPreciosGigantes
-//buscarVariedad
+mostrarPreciosChicas
+mostrarPreciosMedias
+mostrarPreciosGigantes
+buscarVariedad
 agregarVariedad
 borrarVariedad
 
@@ -44,11 +44,18 @@ const napolitana = new pizza (8, "napolitana", 1300, 1400, 2400, "PIZZOTASFINAL 
 
 //array para guardar todas las variedades de pizzas con sus respectivos precios
 
-const menu = [muzza, fugazza, jamon, caprece, morron, palmito,anchoas];
+let menu = []
+if ( localStorage.getItem("menuPizzas")){
+    menu = JSON.parse(localStorage.getItem("menuPizzas"))
+}else{
+    menu.push(muzza, fugazza, jamon, caprece, morron, palmito,anchoas);
+    localStorage.setItem(JSON.stringify("menuPizzas"))
 
 menu.push(napolitana)
-console.log(menu)
+}
 
+console.log(menu)
+ 
 
 //funcion para mostrar el menú
 function mostrarMenu(array){
@@ -58,7 +65,7 @@ function mostrarMenu(array){
     }
 }
 
-mostrarMenu(menu)
+//mostrarMenu(menu)
 
 
 function mostrarPreciosChicas(array){
@@ -84,39 +91,39 @@ function mostrarPreciosGigantes(array){
         console.log(pizzaGigante.id, pizzaGigante.nombre,"$",pizzaGigante.precioGigante)
     }
 }
-mostrarPreciosGigantes(menu)
+// mostrarPreciosGigantes(menu)
 
 
 
 //función para buscar los precios por variedad a pedido del cliente:
 
-// function buscarVariedad(array){
+function buscarVariedad(array){
     
-//     let pedirVariedad = prompt(`elige una variedad para conocer el precio:
-//     muzza
-//     jamon
-//     fugazza
-//     palmito
-//     anchoas
-//     napolitana`)
-//     let variedad = array.find((variedad) => variedad.nombre.toLowerCase() == pedirVariedad.toLowerCase() )
-//         alert(`"los precios de" ${variedad.nombre} son:
-//         $${variedad.precioChica} la pizza chica,
-//         $${variedad.precioMedia} la media pizza
-//         $${variedad.precioGigante} la pizza gigante`)
+    let pedirVariedad = prompt(`elige una variedad para conocer el precio:
+    muzza
+    jamon
+    fugazza
+    palmito
+    anchoas
+    napolitana`)
+    let variedad = array.find((variedad) => variedad.nombre.toLowerCase() == pedirVariedad.toLowerCase() )
+        alert(`"los precios de" ${variedad.nombre} son:
+        $${variedad.precioChica} la pizza chica,
+        $${variedad.precioMedia} la media pizza
+        $${variedad.precioGigante} la pizza gigante`)
 
-// }
+}
 //    buscarVariedad(menu) 
 
 
      //función map:
-     let VariedadesPizza  = menu.map((e) => e.nombre )
-     console.log(VariedadesPizza)
+    //  let VariedadesPizza  = menu.map((e) => e.nombre )
+    //  console.log(VariedadesPizza)
 
 // función for each
-  menu.forEach((e) =>{
-     console.log(`${e.nombre} $ ${e.precioChica}` )
- })
+//   menu.forEach((e) =>{
+//      console.log(`${e.nombre} $ ${e.precioChica}` )
+//  })
 
 
  //ordenamos los precios de menor a mayor
@@ -142,20 +149,22 @@ function agregarVariedad (array) {
     let precioMed = document.getElementById("inputPrecioMedia")
     let precioGig = document.getElementById("inputPrecioGigante")
 
-    const nuevapizza = new pizza (nuevoCodigo.value, nuevaVariedad.value, precioChi.value, precioMed.value, precioGig.value, "PIZZOTASFINAL 400.png");
+    const nuevapizza = new pizza (nuevoCodigo.value, nuevaVariedad.value, parseInt(precioChi.value), parseInt(precioMed.value), parseInt(precioGig.value), "PIZZOTASFINAL 400.png");
 
     array.push(nuevapizza)
     verMenu(menu)
     console.log(nuevapizza)
 
-    localStorage.setItem("menuPizzas", menu)
+    localStorage.setItem("menuPizzas", JSON.stringify(array))
     
-    nuevoCodigo.value =""
-    nuevaVariedad.value =""
-    precioChi.value =""
-    precioMed.value =""
-    precioMed.value =""
-    precioGig.value =""
+    formid = document.getElementById("cargarPizzas")
+    formid.reset()
+    // nuevoCodigo.value =""
+    // nuevaVariedad.value =""
+    // precioChi.value =""
+    // precioMed.value =""
+    // precioMed.value =""
+    // precioGig.value =""
     
     
 }
@@ -224,7 +233,14 @@ function verAdministrador(){
                 <label class="Label" for="precioGigante">Precio de la Pizza Gigante</label>
                 <input type="number" name="precioGigante" id="inputPrecioGigante">
                 <br>
-                <input type="button" class="btn-cargar" id="btnCargar" >
+                <input type="button" class="btn-cargar" id="btnCargar" value="Cargar" >
+                <br>
+                <br>
+                <h2>Eliminar variedades de Pizzotas</h2>
+                <label class="Label" for="Nombre">Nombre de la pizza a eliminar</label>
+                <input type="text" name="Nombre" id="inputNombreEliminar">
+                <br>
+                <input type="button" class="btn-eliminar" id="btnEmilinar" value="Eliminar" >
                 <br>
                 <br>
                 <button type="button" class="btn btn-danger" id="salirAdministrador">Salir</button>
