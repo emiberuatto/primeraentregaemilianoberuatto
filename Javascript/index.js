@@ -183,11 +183,11 @@ for (let pizzas of array){
     <div class="catalogo border border-danger">
             <img class="card-img-top d-block mx-auto img-fluid m-1" style=" width: 180px;"  src="imagenes/${pizzas.imagen}" alt="${pizzas.nombre}">
             <h3 style=" font-size: 1.2rem; margin-left: 1rem;">${pizzas.nombre}</h3>
-            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Pizza Chica: ${pizzas.precioChica} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
-            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Media Pizza: ${pizzas.precioMedia} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
-            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Pizza Gigante: ${pizzas.precioGigante} <input type="radio" name="pizza${pizzas.nombre}" id="pizzaComun" style=" width: 1rem;"></h3>
+            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Pizza Chica: ${pizzas.precioChica} <input type="radio" value="${pizzas.precioChica}" name="precioPizza" id="pizzaComun" style=" width: 1rem;"></h3>
+            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Media Pizza: ${pizzas.precioMedia} <input type="radio" value="${pizzas.precioMedia}" name="precioPizza" id="pizzaComun" style=" width: 1rem;"></h3>
+            <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Pizza Gigante: ${pizzas.precioGigante} <input type="radio" value="${pizzas.precioGigante}" name="precioPizza" id="pizzaComun" style=" width: 1rem;"></h3>
             
-            <button id="botonComprar ${pizzas.id}" class="btn btn-outline-danger m-3" >Comprar</button>
+            <button onclick="cargarCarrito()"id="botonComprar ${pizzas.id}" class="btn btn-outline-danger m-3" >Comprar</button>
         </div>
     `
     catalogoMenu.appendChild(divMenu)  
@@ -213,7 +213,8 @@ function borrarVariedad(array){
 verMenu(menu)
  localStorage.setItem("menuPizzas", JSON.stringify(array))
     
- nombreaEliminar.value = ""
+ formid2 = document.getElementById("eliminarPizzas")
+    formid2.reset()
 }
 
 
@@ -230,7 +231,7 @@ function verAdministrador(){
                 <label class="Label" for="id">Ingrese ID</label>
                 <input type="number" name="id" id="inputCod">
                 <label class="Label" for="Nombre">Nombre de la pizza</label>
-                <input type="text" name="Nombre" id="inputNombre">
+                <input type="text" name="Nombre" id="inputNombre" required>
                 <label class="Label" for="precioChica">Precio de la Pizza Chica</label>
                 <input type="number" name="precioChica" id="inputPrecioChica">
                 <label class="Label" for="precioMedia">Precio de la Media Pizza</label>
@@ -241,9 +242,11 @@ function verAdministrador(){
                 <input type="button" class="btn-cargar" id="btnCargar" value="Cargar" >
                 <br>
                 <br>
+            </form>
+            <form id="eliminarPizzas">
                 <h2>Eliminar variedades de Pizzotas</h2>
                 <label class="Label" for="NombreEliminar">Nombre de la pizza a eliminar</label>
-                <input type="text" name="NombreEliminar" id="inputNombreEliminar">
+                <input type="text" name="NombreEliminar" id="inputNombreEliminar" required>
                 <br>
                 <input type="button" class="btn-Eliminar" id="btnEmilinar" value="Eliminar" >
                 <br>
@@ -282,11 +285,16 @@ function verAdministrador(){
      }
   
     
-     
-     
 
 
+// función para seleccionar uno de los valores de un producto para cargarlo al carrito     
+     let precioPizza = document.getElementsByName("precioPizza")
+     function cargarCarrito(){
+        let precioElegida = document.querySelector("input[name=precioPizza]:checked");
+        precioElegida = precioElegida.value
+        console.log(precioElegida)
 
+}
 // Acá comienza a correr el programa para el usuario
 // let contraseña = prompt(`Si sos administrador ingresa la contraseña, si no, preciona enter y disfruta de las pizzotas`)
 

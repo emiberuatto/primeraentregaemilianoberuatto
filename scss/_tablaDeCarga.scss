@@ -6,7 +6,7 @@
     justify-content: center;
     width: 80vw;
     margin: auto;
-    #cargarPizzas{
+    #cargarPizzas, #eliminarPizzas{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
