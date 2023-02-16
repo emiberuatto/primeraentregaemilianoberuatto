@@ -13,6 +13,18 @@ borrarVariedad
 
 let catalogoMenu = document.getElementById("catalogo")
 let administrador = document.getElementById("formContainer")
+let precioElegida = document.querySelector("input[name=precioPizza]:checked");
+let precioPizza = document.getElementsByName("precioPizza")     
+
+
+let productosEnCarrito 
+if (localStorage.getItem("carrito")){
+    productosEnCarrito = JSON.parse(localStorage.getItem("carrito"))
+}else{
+    productosEnCarrito = []
+    localStorage.setItem("carrito", productosEnCarrito)
+}
+
 
 //objetos para la pizzería, en este caso van a ser las variedades de pizzas con sus precios en sus diferentes versiones
 //para crear los objetos utilizamos el metodo constructor
@@ -172,6 +184,8 @@ function agregarVariedad (array) {
 
 
 
+
+
 function verMenu(array) {
 
     catalogoMenu.innerHTML = ""
@@ -187,15 +201,31 @@ for (let pizzas of array){
             <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Media Pizza: ${pizzas.precioMedia} <input type="radio" value="${pizzas.precioMedia}" name="precioPizza" id="pizzaComun" style=" width: 1rem;"></h3>
             <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Pizza Gigante: ${pizzas.precioGigante} <input type="radio" value="${pizzas.precioGigante}" name="precioPizza" id="pizzaComun" style=" width: 1rem;"></h3>
             
-            <button onclick="cargarCarrito()"id="botonComprar ${pizzas.id}" class="btn btn-outline-danger m-3" >Comprar</button>
+            <button id="botonCarrito${pizzas.nombre}" class="btn btn-outline-danger m-3" >Agregar al carrito</button>
         </div>
     `
     catalogoMenu.appendChild(divMenu)  
+    
+    let botonCarrito = document.getElementById(`botonCarrito${pizzas.nombre}`)
+botonCarrito.onclick = () =>{
+ agregarAlCarrito(pizzas)
+}
 }
 }
 verMenu(menu)
 
+function agregarAlCarrito(pizzas) {
+    let precioElegida = document.querySelector("input[name=precioPizza]:checked");
+    console.log(`Tu pizza ${pizzas.nombre} cuesta ${precioElegida.value} ha sido agregada al carrito`)
+    pizzas = `Tu pizza ${pizzas.nombre} cuesta ${precioElegida.value} ha sido agregada al carrito`
+    productosEnCarrito.push(pizzas)
+    console.log(productosEnCarrito)
+    console.log(pizzas)
+    localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
+}
 
+console.log(productosEnCarrito)
+console.log(botonCarrito)
 
 
 
@@ -288,13 +318,17 @@ function verAdministrador(){
 
 
 // función para seleccionar uno de los valores de un producto para cargarlo al carrito     
-     let precioPizza = document.getElementsByName("precioPizza")
-     function cargarCarrito(){
-        let precioElegida = document.querySelector("input[name=precioPizza]:checked");
-        precioElegida = precioElegida.value
-        console.log(precioElegida)
+     
+     
+        // let precioElegida = document.querySelector("input[name=precioPizza]:checked");
+        // precioElegida = precioElegida.value
+        // console.log(precioElegida)
 
-}
+
+
+
+
+
 // Acá comienza a correr el programa para el usuario
 // let contraseña = prompt(`Si sos administrador ingresa la contraseña, si no, preciona enter y disfruta de las pizzotas`)
 
