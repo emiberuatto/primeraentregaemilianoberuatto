@@ -15,7 +15,8 @@ let catalogoMenu = document.getElementById("catalogo")
 let administrador = document.getElementById("formContainer")
 let precioElegida = document.querySelector("input[name=precioPizza]:checked");
 let precioPizza = document.getElementsByName("precioPizza")     
-
+let modalCarrito = document.getElementById("modal")
+let btnNavCarrito = document.getElementById("btnNavCarrito")
 
 let productosEnCarrito 
 if (localStorage.getItem("carrito")){
@@ -61,7 +62,7 @@ if ( localStorage.getItem("menuPizzas")){
     menu = JSON.parse(localStorage.getItem("menuPizzas"))
 }else{
     menu.push(muzza, fugazza, jamon, caprece, morron, palmito,anchoas);
-    localStorage.setItem(JSON.stringify("menuPizzas"))
+    localStorage.setItem("menuPizzas", JSON.stringify(menu))
 
 menu.push(napolitana)
 }
@@ -77,7 +78,7 @@ function mostrarMenu(array){
     }
 }
 
-//mostrarMenu(menu)
+mostrarMenu(menu)
 
 
 function mostrarPreciosChicas(array){
@@ -209,6 +210,7 @@ for (let pizzas of array){
     let botonCarrito = document.getElementById(`botonCarrito${pizzas.nombre}`)
 botonCarrito.onclick = () =>{
  agregarAlCarrito(pizzas)
+ cargarProductosCarrito(productosEnCarrito)
 }
 }
 }
@@ -217,15 +219,16 @@ verMenu(menu)
 function agregarAlCarrito(pizzas) {
     let precioElegida = document.querySelector("input[name=precioPizza]:checked");
     console.log(`Tu pizza ${pizzas.nombre} cuesta ${precioElegida.value} ha sido agregada al carrito`)
-    pizzas = `Tu pizza ${pizzas.nombre} cuesta ${precioElegida.value} ha sido agregada al carrito`
+    precioElegida = precioElegida.value
+    pizzas = [pizzas.nombre, precioElegida, pizzas.imagen];
+
+    //pizzas = `Tu pizza ${pizzas.nombre} cuesta $${precioElegida.value} ha sido agregada al carrito`
     productosEnCarrito.push(pizzas)
-    console.log(productosEnCarrito)
-    console.log(pizzas)
     localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
 }
 
 console.log(productosEnCarrito)
-console.log(botonCarrito)
+
 
 
 
@@ -315,7 +318,25 @@ function verAdministrador(){
      }
   
     
-
+function cargarProductosCarrito(array){
+    array.forEach((productoCarrito)=>{
+        console.log(productoCarrito)
+        modalCarrito = document.createElement("div")
+        modalCarrito.innerHTML = `
+        <div class="card" style="width: 18rem;">
+  <img src="${productoCarrito.imagen}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Tu pizza ${productoCarrito.nombre}</h5>
+    <p class="card-text">cuesta $${productoCarrito.precioElegida}</p>
+    <a href="#" class="btn btn-primary">salir</a>
+  </div>
+</div>
+        `
+    })
+}
+ btnNavCarrito.onclick = ()=>{
+    cargarProductosCarrito(productosEnCarrito)
+}
 
 // función para seleccionar uno de los valores de un producto para cargarlo al carrito     
      
