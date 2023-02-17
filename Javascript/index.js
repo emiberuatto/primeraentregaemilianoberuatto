@@ -2,7 +2,7 @@
 
 funciones:
 //calcularPrecios
-mostrarMenu
+//mostrarMenu
 mostrarPreciosChicas
 mostrarPreciosMedias
 mostrarPreciosGigantes
@@ -15,7 +15,7 @@ let catalogoMenu = document.getElementById("catalogo")
 let administrador = document.getElementById("formContainer")
 let precioElegida = document.querySelector("input[name=precioPizza]:checked");
 let precioPizza = document.getElementsByName("precioPizza")     
-let modalCarrito = document.getElementById("modal")
+let modalCarrito = document.getElementById("modalBody")
 let btnNavCarrito = document.getElementById("btnNavCarrito")
 
 let productosEnCarrito 
@@ -23,7 +23,7 @@ if (localStorage.getItem("carrito")){
     productosEnCarrito = JSON.parse(localStorage.getItem("carrito"))
 }else{
     productosEnCarrito = []
-    localStorage.setItem("carrito", productosEnCarrito)
+    localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
 }
 
 
@@ -67,18 +67,18 @@ if ( localStorage.getItem("menuPizzas")){
 menu.push(napolitana)
 }
 
-console.log(menu)
+//console.log(menu)
  
 
 //funcion para mostrar el menú
-function mostrarMenu(array){
-    for (let pizza of array){
-        console.log(pizza.id, pizza.nombre, pizza.precioChica, pizza.precioMedia, pizza.precioGigante)
+// function mostrarMenu(array){
+//     for (let pizza of array){
+//         console.log(pizza.id, pizza.nombre, pizza.precioChica, pizza.precioMedia, pizza.precioGigante)
 
-    }
-}
+//     }
+// }
 
-mostrarMenu(menu)
+//mostrarMenu(menu)
 
 
 function mostrarPreciosChicas(array){
@@ -143,7 +143,7 @@ function buscarVariedad(array){
  const menu2 = [];
  const nuevoMenu = menu2.concat(menu)
 
- console.log(nuevoMenu)
+ //console.log(nuevoMenu)
  nuevoMenu.sort((a,b) => a.precioChica - b.precioChica)
  
 
@@ -211,25 +211,24 @@ for (let pizzas of array){
 botonCarrito.onclick = () =>{
  agregarAlCarrito(pizzas)
  cargarProductosCarrito(productosEnCarrito)
+
 }
 }
 }
 verMenu(menu)
 
 function agregarAlCarrito(pizzas) {
-    let precioElegida = document.querySelector("input[name=precioPizza]:checked");
-    console.log(`Tu pizza ${pizzas.nombre} cuesta ${precioElegida.value} ha sido agregada al carrito`)
+    let precioElegida = document.querySelector("input[name=precioPizza]:checked");   
     precioElegida = precioElegida.value
-    pizzas = [pizzas.nombre, precioElegida, pizzas.imagen];
-
+    console.log(`Tu pizza ${pizzas.nombre} cuesta ${precioElegida} ha sido agregada al carrito`)
+    
     //pizzas = `Tu pizza ${pizzas.nombre} cuesta $${precioElegida.value} ha sido agregada al carrito`
     productosEnCarrito.push(pizzas)
     localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
+
 }
 
 console.log(productosEnCarrito)
-
-
 
 
 
@@ -319,24 +318,27 @@ function verAdministrador(){
   
     
 function cargarProductosCarrito(array){
-    array.forEach((productoCarrito)=>{
-        console.log(productoCarrito)
-        modalCarrito = document.createElement("div")
-        modalCarrito.innerHTML = `
+    modalCarrito.innerHTML = ""
+    for(let productoCarrito of array){        
+        modalCarrito.innerHTML += `
         <div class="card" style="width: 18rem;">
-  <img src="${productoCarrito.imagen}" class="card-img-top" alt="...">
+  <img src=imagenes/${productoCarrito[2]} class="card-img-top" alt="">
   <div class="card-body">
-    <h5 class="card-title">Tu pizza ${productoCarrito.nombre}</h5>
-    <p class="card-text">cuesta $${productoCarrito.precioElegida}</p>
-    <a href="#" class="btn btn-primary">salir</a>
+    <h5 class="card-title">Tu pizza ${productoCarrito[0]}</h5>
+    <p class="card-text">cuesta $${productoCarrito[1]}</p>
+    
   </div>
 </div>
         `
-    })
+    }
+    
+   
 }
+console.log(productosEnCarrito)
  btnNavCarrito.onclick = ()=>{
     cargarProductosCarrito(productosEnCarrito)
-}
+    //agregarAlCarrito(productosEnCarrito)
+} 
 
 // función para seleccionar uno de los valores de un producto para cargarlo al carrito     
      
