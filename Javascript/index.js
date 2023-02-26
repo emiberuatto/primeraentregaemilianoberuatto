@@ -17,6 +17,7 @@ let precioElegida = document.querySelector("input[name=precioPizza]:checked");
 let precioPizza = document.getElementsByName("precioPizza")     
 let modalCarrito = document.getElementById("modalBody")
 let btnNavCarrito = document.getElementById("btnNavCarrito")
+let precioTotal = document.getElementById("precioTotal")
 
 let productosEnCarrito 
 if (localStorage.getItem("carrito")){
@@ -44,14 +45,14 @@ class pizza {
     }
 }
 
-const muzza = new pizza (1, "muzza", 950, 1100, 1800, "PIZZOTASFINAL 400.png");
-const fugazza = new pizza (2, "fugazza", 1100, 1200, 2100, "PIZZOTASFINAL 400.png");
-const jamon = new pizza (3, "jamon", 1100, 1200, 2100, "PIZZOTASFINAL 400.png");
-const caprece = new pizza (4, "caprece", 1200, 1200, 2100, "PIZZOTASFINAL 400.png");
-const morron = new pizza (5, "morrón", 1200, 1400, 2200,"PIZZOTASFINAL 400.png");
-const palmito = new pizza (6, "palmito", 1850, 2000, 3300, "PIZZOTASFINAL 400.png");
-const anchoas = new pizza (7, "anchoas", 1500, 1600, 2600, "PIZZOTASFINAL 400.png");
-const napolitana = new pizza (8, "napolitana", 1300, 1400, 2400, "PIZZOTASFINAL 400.png");
+const muzza = new pizza (1, "muzza", 950, 1100, 1800, "PIZZOTASFINAL400.png");
+const fugazza = new pizza (2, "fugazza", 1100, 1200, 2100, "PIZZOTASFINAL400.png");
+const jamon = new pizza (3, "jamon", 1100, 1200, 2100, "PIZZOTASFINAL400.png");
+const caprece = new pizza (4, "caprece", 1200, 1200, 2100, "PIZZOTASFINAL400.png");
+const morron = new pizza (5, "morrón", 1200, 1400, 2200,"PIZZOTASFINAL400.png");
+const palmito = new pizza (6, "palmito", 1850, 2000, 3300, "PIZZOTASFINAL400.png");
+const anchoas = new pizza (7, "anchoas", 1500, 1600, 2600, "PIZZOTASFINAL400.png");
+const napolitana = new pizza (8, "napolitana", 1300, 1400, 2400, "PIZZOTASFINAL400.png");
 
 
 
@@ -162,7 +163,7 @@ function agregarVariedad (array) {
     let precioMed = document.getElementById("inputPrecioMedia")
     let precioGig = document.getElementById("inputPrecioGigante")
 
-    const nuevapizza = new pizza (nuevoCodigo.value, nuevaVariedad.value, parseInt(precioChi.value), parseInt(precioMed.value), parseInt(precioGig.value), "PIZZOTASFINAL 400.png");
+    const nuevapizza = new pizza (nuevoCodigo.value, nuevaVariedad.value, parseInt(precioChi.value), parseInt(precioMed.value), parseInt(precioGig.value), "PIZZOTASFINAL400.png");
 
     array.push(nuevapizza)
     verMenu(menu)
@@ -210,20 +211,31 @@ for (let pizzas of array){
     let botonCarrito = document.getElementById(`botonCarrito${pizzas.nombre}`)
 botonCarrito.onclick = () =>{
  agregarAlCarrito(pizzas)
- cargarProductosCarrito(productosEnCarrito)
+ 
 
 }
 }
 }
 verMenu(menu)
 
+
+
 function agregarAlCarrito(pizzas) {
     let precioElegida = document.querySelector("input[name=precioPizza]:checked");   
     precioElegida = precioElegida.value
-    console.log(`Tu pizza ${pizzas.nombre} cuesta ${precioElegida} ha sido agregada al carrito`)
+    console.log(`${pizzas.imagen}Tu pizza ${pizzas.nombre} cuesta ${precioElegida} ha sido agregada al carrito`)
+
+    class pizzasCarrito {
+    constructor (nombre, precioElegida, imagen){
+        this.nombre = nombre,
+        this.precioElegida = precioElegida,
+        this.imagen = imagen
+    }
+}
+    let pizzotaCarrito = new pizzasCarrito (pizzas.nombre, precioElegida, pizzas.imagen);
     
     //pizzas = `Tu pizza ${pizzas.nombre} cuesta $${precioElegida.value} ha sido agregada al carrito`
-    productosEnCarrito.push(pizzas)
+    productosEnCarrito.push(pizzotaCarrito)
     localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
 
 }
@@ -315,30 +327,79 @@ function verAdministrador(){
      $mostrarAdministrador.onclick = ()=>{
         verAdministrador()
      }
-  
+
+     function compraTotal(array){
+
+        // let acumulador = 0
+        // for ( let pizzas of array){
+        //     acumulador = acumulador + pizzas.precioElegida
+        //     console.log(acumulador)
+        // }
+    
+        let total = array.reduce((acc, productoCarrito)=> acc + parseInt(productoCarrito.precioElegida) ,0)
+        console.log("Acc con reduce " + total)
+        //ternario para mostrar en el html
+        total == 0 ?
+        precioTotal.innerHTML = `No hay productos agregados` :
+        precioTotal.innerHTML = `El total del carrito es <strong>${total}</strong>`
+        return total
+    }
     
 function cargarProductosCarrito(array){
     modalCarrito.innerHTML = ""
     for(let productoCarrito of array){        
         modalCarrito.innerHTML += `
-        <div class="card" style="width: 18rem;">
-  <img src=imagenes/${productoCarrito[2]} class="card-img-top" alt="">
+        <div class="card" style="width: 18rem;" id="productoCarrito${productoCarrito.nombre}">
+  <img "src=/imagenes/${productoCarrito.imagen}" class="card-img-top" alt="${productoCarrito.imagen}">
   <div class="card-body">
-    <h5 class="card-title">Tu pizza ${productoCarrito[0]}</h5>
-    <p class="card-text">cuesta $${productoCarrito[1]}</p>
-    
-  </div>
+    <h5 class="card-title">Tu pizza ${productoCarrito.nombre}</h5>
+    <p class="card-text">cuesta $${productoCarrito.precioElegida}</p
+  </div>         
+  <button type="button" class="btn btn-danger" id="botonEliminar${productoCarrito.nombre}">Eliminar</button>
 </div>
         `
     }
-    
-   
+array.forEach((productoCarrito)=>{
+    document.getElementById(`botonEliminar${productoCarrito.nombre}`).addEventListener("click", ()=>{
+         console.log("btn eliminar funciona")
+        //borrar del DOM
+        console.log(productoCarrito.nombre)
+        let cardProducto = document.getElementById(`productoCarrito${productoCarrito.nombre}`)
+        cardProducto.remove()
+        //eliminar del array
+        //busco prod a eliminar
+        let productoEliminar = array.find(pizzas => pizzas.nombre == productoCarrito.nombre)
+        console.log(productoEliminar)
+        //busco el indice
+        let posicion = array.indexOf(productoEliminar)
+        console.log(posicion)
+        //splice (posicion donde trabajar, cant de elementos a eliminar)
+        array.splice(posicion, 1)
+        console.log(array)
+        //eliminar storage (volver a setear)
+        localStorage.setItem("carrito", JSON.stringify(array))
+        //recalcular total
+        compraTotal(array)
+    })
+ })    
+   compraTotal(array)
 }
 console.log(productosEnCarrito)
  btnNavCarrito.onclick = ()=>{
     cargarProductosCarrito(productosEnCarrito)
     //agregarAlCarrito(productosEnCarrito)
 } 
+
+
+
+
+
+
+
+
+
+
+//compraTotal(array)
 
 // función para seleccionar uno de los valores de un producto para cargarlo al carrito     
      
