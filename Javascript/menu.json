@@ -1,0 +1,130 @@
+[
+    {
+        "id":1,
+        "nombre": "Muzza",
+        "precioChica": 1100,
+        "precioMedia":1200,
+        "precioGigante":2100,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":2,
+        "nombre": "Provenzal",
+        "precioChica": 1100,
+        "precioMedia":1200,
+        "precioGigante":2100,
+        "imagen":"22.09.png"
+    },
+    {
+        "id":3,
+        "nombre": "Fugazza",
+        "precioChica": 1300,
+        "precioMedia":1400,
+        "precioGigante":2500,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":4,
+        "nombre": "Jamón",
+        "precioChica": 1300,
+        "precioMedia":1400,
+        "precioGigante":2500,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":5,
+        "nombre": "Caprece",
+        "precioChica": 1300,
+        "precioMedia":1400,
+        "precioGigante":2500,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":6,
+        "nombre": "Morrón",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2700,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":7,
+        "nombre": "Alemana",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2700,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":8,
+        "nombre": "4 Quesos",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2700,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":9,
+        "nombre": "Huevo",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2700,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":10,
+        "nombre": "Choclo",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2700,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":11,
+        "nombre": "Jamón c/crema",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2700,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":12,
+        "nombre": "Napolitana",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2900,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":13,
+        "nombre": "Roquefort",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2900,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":14,
+        "nombre": "Calabresa",
+        "precioChica": 1500,
+        "precioMedia":1600,
+        "precioGigante":2900,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":15,
+        "nombre": "Anchoas",
+        "precioChica": 1600,
+        "precioMedia":1700,
+        "precioGigante":3000,
+        "imagen":"PIZZOTASFINAL400.png"
+    },
+    {
+        "id":16,
+        "nombre": "Palmitos",
+        "precioChica": 2500,
+        "precioMedia":2700,
+        "precioGigante":4700,
+        "imagen":"PIZZOTASFINAL400.png"
+    }
+]

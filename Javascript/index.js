@@ -1,12 +1,12 @@
 // El código es para una pizzería, interactuamos con el cliente en caso que éste este interesado.
 
-funciones:
+
 //calcularPrecios
 //mostrarMenu
 mostrarPreciosChicas
 mostrarPreciosMedias
 mostrarPreciosGigantes
-buscarVariedad
+//buscarVariedad
 agregarVariedad
 borrarVariedad
 
@@ -18,6 +18,7 @@ let precioPizza = document.getElementsByName("precioPizza")
 let modalCarrito = document.getElementById("modalBody")
 let btnNavCarrito = document.getElementById("btnNavCarrito")
 let precioTotal = document.getElementById("precioTotal")
+let finalizarCompra = document.getElementById("finalizarCompra")
 
 let productosEnCarrito 
 if (localStorage.getItem("carrito")){
@@ -45,30 +46,39 @@ class pizza {
     }
 }
 
-const muzza = new pizza (1, "muzza", 950, 1100, 1800, "PIZZOTASFINAL400.png");
-const fugazza = new pizza (2, "fugazza", 1100, 1200, 2100, "PIZZOTASFINAL400.png");
-const jamon = new pizza (3, "jamon", 1100, 1200, 2100, "PIZZOTASFINAL400.png");
-const caprece = new pizza (4, "caprece", 1200, 1200, 2100, "PIZZOTASFINAL400.png");
-const morron = new pizza (5, "morrón", 1200, 1400, 2200,"PIZZOTASFINAL400.png");
-const palmito = new pizza (6, "palmito", 1850, 2000, 3300, "PIZZOTASFINAL400.png");
-const anchoas = new pizza (7, "anchoas", 1500, 1600, 2600, "PIZZOTASFINAL400.png");
-const napolitana = new pizza (8, "napolitana", 1300, 1400, 2400, "PIZZOTASFINAL400.png");
-
-
+// const muzza = new pizza (1, "muzza", 950, 1100, 1800, "PIZZOTASFINAL400.png");
+// const fugazza = new pizza (2, "fugazza", 1100, 1200, 2100, "PIZZOTASFINAL400.png");
+// const jamon = new pizza (3, "jamon", 1100, 1200, 2100, "PIZZOTASFINAL400.png");
+// const caprece = new pizza (4, "caprece", 1200, 1200, 2100, "PIZZOTASFINAL400.png");
+// const morron = new pizza (5, "morrón", 1200, 1400, 2200,"PIZZOTASFINAL400.png");
+// const palmito = new pizza (6, "palmito", 1850, 2000, 3300, "PIZZOTASFINAL400.png");
+// const anchoas = new pizza (7, "anchoas", 1500, 1600, 2600, "PIZZOTASFINAL400.png");
+// const napolitana = new pizza (8, "napolitana", 1300, 1400, 2400, "PIZZOTASFINAL400.png");
+let menu = []
+ const menuPizzeria = async () => {
+    const resp = await fetch ("Javascript/menu.json")
+    const menuPizzotas = await resp.json()
+    console.log(menuPizzotas)
+    for (let pizzas of menuPizzotas){
+        let pizzota = new pizza (pizzas.id, pizzas.nombre, pizzas.precioChica, pizzas.precioMedia, pizzas.precioGigante, pizzas.precioGigante, pizzas.imagen);
+        menu.push(pizzota)
+        
+    }
+    localStorage.setItem("menuPizzas", JSON.stringify(menu))
+ }
 
 //array para guardar todas las variedades de pizzas con sus respectivos precios
 
-let menu = []
+
 if ( localStorage.getItem("menuPizzas")){
     menu = JSON.parse(localStorage.getItem("menuPizzas"))
 }else{
-    menu.push(muzza, fugazza, jamon, caprece, morron, palmito,anchoas);
-    localStorage.setItem("menuPizzas", JSON.stringify(menu))
+    //menu.push(muzza, fugazza, jamon, caprece, morron, palmito,anchoas);
+    menuPizzeria()
 
-menu.push(napolitana)
 }
 
-//console.log(menu)
+console.log(menu)
  
 
 //funcion para mostrar el menú
@@ -127,6 +137,25 @@ function buscarVariedad(array){
         $${variedad.precioGigante} la pizza gigante`)
 
 }
+
+function alertaCompra(){
+    swal({
+        title: "Seguro quieres realizar la compra?",
+        text: `estas a unos pasos de comer algo delicioso!!`,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((compra) => {
+        if (compra) {
+          swal("Felicidades!! tu comida está en camino!", {
+            icon: "success",
+          });
+        } else {
+          swal("tus pedidos siguen en el carrito");
+        }
+      });
+    }
 //    buscarVariedad(menu) 
 
 
@@ -141,11 +170,11 @@ function buscarVariedad(array){
 
 
  //ordenamos los precios de menor a mayor
- const menu2 = [];
- const nuevoMenu = menu2.concat(menu)
+//  const menu2 = [];
+//  const nuevoMenu = menu2.concat(menu)
 
- //console.log(nuevoMenu)
- nuevoMenu.sort((a,b) => a.precioChica - b.precioChica)
+//  //console.log(nuevoMenu)
+//  nuevoMenu.sort((a,b) => a.precioChica - b.precioChica)
  
 
 //función para agregar variedades al menú
@@ -197,7 +226,7 @@ for (let pizzas of array){
     divMenu.className ="col-12 col-md-6 col-lg-4 my-3"
     divMenu.innerHTML = `
     <div class="catalogo border border-danger">
-            <img class="card-img-top d-block mx-auto img-fluid m-1" style=" width: 180px;"  src="imagenes/${pizzas.imagen}" alt="${pizzas.nombre}">
+            <img class="card-img-top d-block mx-auto img-fluid m-1" style=" width: 180px;"  src="./imagenes/${pizzas.imagen}" alt="${pizzas.nombre}">
             <h3 style=" font-size: 1.2rem; margin-left: 1rem;">${pizzas.nombre}</h3>
             <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Pizza Chica: ${pizzas.precioChica} <input type="radio" value="${pizzas.precioChica}" name="precioPizza" id="pizzaComun" style=" width: 1rem;"></h3>
             <h3 style=" font-size: 1.2rem; margin-left: 1rem;">Precio Media Pizza: ${pizzas.precioMedia} <input type="radio" value="${pizzas.precioMedia}" name="precioPizza" id="pizzaComun" style=" width: 1rem;"></h3>
@@ -211,7 +240,6 @@ for (let pizzas of array){
     let botonCarrito = document.getElementById(`botonCarrito${pizzas.nombre}`)
 botonCarrito.onclick = () =>{
  agregarAlCarrito(pizzas)
- 
 
 }
 }
@@ -224,7 +252,7 @@ function agregarAlCarrito(pizzas) {
     let precioElegida = document.querySelector("input[name=precioPizza]:checked");   
     precioElegida = precioElegida.value
     console.log(`${pizzas.imagen}Tu pizza ${pizzas.nombre} cuesta ${precioElegida} ha sido agregada al carrito`)
-
+    
     class pizzasCarrito {
     constructor (nombre, precioElegida, imagen){
         this.nombre = nombre,
@@ -237,7 +265,14 @@ function agregarAlCarrito(pizzas) {
     //pizzas = `Tu pizza ${pizzas.nombre} cuesta $${precioElegida.value} ha sido agregada al carrito`
     productosEnCarrito.push(pizzotaCarrito)
     localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
-
+    
+        swal({
+            title: "Agregaste al carrito!",
+            text: `Una pizza ${pizzas.nombre} que cuesta ${precioElegida} ` ,
+            icon: "success",
+            timer: 3000,
+          });
+        
 }
 
 console.log(productosEnCarrito)
@@ -330,12 +365,6 @@ function verAdministrador(){
 
      function compraTotal(array){
 
-        // let acumulador = 0
-        // for ( let pizzas of array){
-        //     acumulador = acumulador + pizzas.precioElegida
-        //     console.log(acumulador)
-        // }
-    
         let total = array.reduce((acc, productoCarrito)=> acc + parseInt(productoCarrito.precioElegida) ,0)
         console.log("Acc con reduce " + total)
         //ternario para mostrar en el html
@@ -358,40 +387,43 @@ function cargarProductosCarrito(array){
   <button type="button" class="btn btn-danger" id="botonEliminar${productoCarrito.nombre}">Eliminar</button>
 </div>
         `
+
     }
 array.forEach((productoCarrito)=>{
     document.getElementById(`botonEliminar${productoCarrito.nombre}`).addEventListener("click", ()=>{
          console.log("btn eliminar funciona")
-        //borrar del DOM
         console.log(productoCarrito.nombre)
         let cardProducto = document.getElementById(`productoCarrito${productoCarrito.nombre}`)
         cardProducto.remove()
-        //eliminar del array
-        //busco prod a eliminar
+
         let productoEliminar = array.find(pizzas => pizzas.nombre == productoCarrito.nombre)
         console.log(productoEliminar)
-        //busco el indice
+    
         let posicion = array.indexOf(productoEliminar)
         console.log(posicion)
-        //splice (posicion donde trabajar, cant de elementos a eliminar)
+        
         array.splice(posicion, 1)
         console.log(array)
-        //eliminar storage (volver a setear)
+    
         localStorage.setItem("carrito", JSON.stringify(array))
-        //recalcular total
+    
         compraTotal(array)
     })
  })    
    compraTotal(array)
+   
 }
 console.log(productosEnCarrito)
  btnNavCarrito.onclick = ()=>{
     cargarProductosCarrito(productosEnCarrito)
     //agregarAlCarrito(productosEnCarrito)
+    
 } 
 
 
-
+finalizarCompra.addEventListener("click", ()=>{
+    alertaCompra()
+})
 
 
 
@@ -572,4 +604,3 @@ console.log(productosEnCarrito)
 
 // }
 
-  
